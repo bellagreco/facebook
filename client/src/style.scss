@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+}
+
+* {
+    font-family: sans-serif;
+}
+
+.header {
+    color: aliceblue;
+    width: 100%;
+    background: #4167B2;
+    max-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content:space-between !important;
+    
+    input {
+        width: 400px;
+        margin: 10px;
+    }
+
+    .header-wrapper {
+
+        display: flex;
+        justify-items: center;
+        img {
+            height: 35px;
+ 
+        }
+    }
+    p {
+        margin: 0 20px;
+        margin-top: 10px;
+    }
+    .icon-wrapper {
+
+        display: flex;
+       justify-content: center;
+    }
+}
+
+
+
+.logo {
+    height: 35px;
+    margin: 7px 15px;
+}
