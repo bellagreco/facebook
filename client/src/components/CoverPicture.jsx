@@ -6,16 +6,16 @@ import axios from 'axios'
 import FileBase from 'react-file-base64';
 
 
-function ProFilePicture (props) {
+function CoverPicture (props) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [data, setData] = useState(null)
 
 
 
-    const submitProfilePicture = async () => {
+    const submitCoverPicture = async () => {
         const email = localStorage.getItem('email').toString();
         console.log(selectedImage)
-        await axios.post(`http://localhost:3001/updateProfilePicture?email=${email}`, { profilePicture: selectedImage })
+        await axios.post(`http://localhost:3001/updateCoverPicture?email=${email}`, { profileCover: selectedImage })
             .then(response => console.log(response, 'POST'))
             .catch(error => {
                 console.log(error)
@@ -29,17 +29,17 @@ function ProFilePicture (props) {
 
     }
     return <>
-       <div style={{ width: '200px', height: '200px', marginBottom: '50px' }}>
-                <img style={{ width: '100%', height: '100%', objectFit: 'contain', overflow: 'hidden' }} src={props.data && props.data.profilePicture ? props.data.profilePicture : 'https://nakedsecurity.sophos.com/wp-content/uploads/sites/2/2013/08/facebook-silhouette_thumb.jpg'} />
+       <div style={{ width: '850x', height: '250px', marginBottom: '50px', overflow: 'hidden'  }}>
+                <img style={{ width: '100%', height: '100%', objectFit: 'cover', overflow: 'hidden' }} src={props.data && props.data.profileCover ? props.data.profileCover : 'https://cdn.kapwing.com/final_5dcefe88eefa230014071a02_435224.jpg'} />
                 <FileBase
                     type="file"
                     multiple={false}
                     onDone={({ base64 }) => setSelectedImage(base64)}
                 />
-                <button onClick={submitProfilePicture} > Submit Profile Picture</button>
+                <button onClick={submitCoverPicture} > Submit Cover Picture</button>
 
             </div>
     </>;
   }
 
-  export default ProFilePicture
+  export default CoverPicture

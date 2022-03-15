@@ -5,7 +5,7 @@ import { useEffect } from 'react/cjs/react.development';
 import axios from 'axios'
 import FileBase from 'react-file-base64';
 
-function Posts (props) {
+function Posts(props) {
     const [data, setData] = useState(null)
 
     const [post, setPost] = useState(null)
@@ -32,16 +32,29 @@ function Posts (props) {
     }
 
     return <div>
-   <input type="text" name='post' value={post} onChange={(e) => { getPost(e) }} />
-            <button onClick={submitPost} > Submit </button>
+        <div className='post__container'>
+            <div className='post__header'>
+                <div className='post__option'><p>Make Post</p></div>
+                <div className='post__option'><p>Photo/Video</p></div>
+                <div className='post__option'><p>Life Event</p></div>
+                <div className='post__input'>
+                    <div className='post__picture'><img src={props.data && props.data.profilePicture} /></div>
+                    <input type="text" name='post' value={post} onChange={(e) => { getPost(e) }} />
 
-            {props.data && props.data.posts.slice(0).reverse().map(x =>
-                <div>
-                    <p>{props.data.name + ' ' + props.data.lastname + ': ' + x}</p>
                 </div>
-            )}
+            </div>
+        </div>
+        {/* <input type="text" name='post' value={post} onChange={(e) => { getPost(e) }} /> */}
+
+        <button onClick={submitPost} > Submit </button>
+
+        {props.data && props.data.posts && props.data.posts.slice(0).reverse().map(x =>
+            <div>
+                <p>{props.data.name + ' ' + props.data.lastname + ': ' + x}</p>
+            </div>
+        )}
 
     </div>;
-  }
+}
 
-  export default Posts
+export default Posts

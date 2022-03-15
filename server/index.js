@@ -157,6 +157,29 @@ app.post("/updateProfilePicture", (req, res) => {
   });
 });
 
+app.post("/updateCoverPicture", (req, res) => {
+  const email = req.query.email;
+  console.log(email)
+  UserModel.findOne({ email: email }, (err, result) => {
+
+    if (err) {
+      console.log(err)
+    } else {
+      const profileCover = req.body.profileCover;
+      let base64 = profileCover.toString('base64');
+    // console.log(base64.substr(0,200));
+      console.log(base64)
+      if (profileCover) {
+        result.profileCover = base64;
+      }
+      // result.posts = new newPost
+
+      result.save();
+      res.status(201).json(result);
+    }
+  });
+});
+
 app.post("/login", async (req, res) => {
   try {
     const email = req.body.email;
