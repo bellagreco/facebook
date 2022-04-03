@@ -1,5 +1,7 @@
 body {
     margin: 0;
+    color: #4e4e55;
+    background: #e9eaed;
 }
 
 * {
@@ -9,24 +11,22 @@ body {
 .header {
     color: aliceblue;
     width: 100%;
-    background: #4167B2;
+    background: #4167b2;
     max-height: 50px;
     display: flex;
     align-items: center;
-    justify-content:space-between !important;
-    
+    justify-content: space-between !important;
+
     input {
         width: 400px;
         margin: 10px;
     }
 
     .header-wrapper {
-
         display: flex;
         justify-items: center;
         img {
             height: 35px;
- 
         }
     }
     p {
@@ -34,15 +34,144 @@ body {
         margin-top: 10px;
     }
     .icon-wrapper {
-
         display: flex;
-       justify-content: center;
+        justify-content: center;
     }
 }
-
-
 
 .logo {
     height: 35px;
     margin: 7px 15px;
+}
+
+.profile__cover {
+    height: 380px;
+    width: 1100px;
+    margin: 0 auto;
+    z-index: -1;
+    display: flex;
+    align-items: flex-end;
+    color: honeydew;
+    background-size: 100%;
+    background-position: center;
+    p {
+        font-size: 32px;
+        margin-left: 200px;
+        font-weight: 600;
+        width: 500px;
+        padding-top: 15px;
+    }
+}
+
+.profile__picture {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    z-index: 9000;
+    width: 160px;
+    height: 160px;
+    background: honeydew;
+    padding: 5px;
+    object-fit: cover;
+}
+
+.relative {
+    position: relative;
+    z-index: 1;
+    width: 400px;
+    height: 100px;
+    margin-top: 20px;
+    margin-left: 35px;
+    margin-right: 200px;
+}
+
+.profile__wrapper {
+    width: 100%;
+}
+
+.profile__cover-wrapper {
+    width: 100%;
+    // padding: 0 100px;
+}
+
+.information {
+    height: 100px;
+    background: white;
+    width: 1100px;
+    margin: 0 auto;
+    padding-top: 10px;
+
+    .information-wrapper {
+        margin: 0;
+        margin-left: 235px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        ul {
+            margin: 0;
+            padding-left: 0;
+            font-size: 11px;
+            color: gray;
+            list-style: none;
+            li {
+                margin-bottom: 6px;
+
+                img {
+                    width: 10px;
+                    margin-right: 4px;
+                }
+            }
+        }
+    }
+}
+
+.profile-information {
+    width: 300px;
+}
+
+.edit-information {
+    margin-right: 20px;
+    button {
+        background: #f3f3f3;
+        color: rgb(39, 39, 39);
+        padding: 5px 12px;
+        border: #363636 solid 1px;
+
+        font-weight: 600;
+        font-size: 12px;
+        margin: 4px 5px;
+    }
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border: solid 1px white;
+    border-radius: 100px;
+    position: absolute;
+    z-index: 9999999;
+    top: 32px;
+    left: 144px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    &:hover {
+        background-color: rgb(226, 226, 226);
+        border: solid 1px rgb(226, 226, 226);
+
+    }
+
+    img {
+        width: 20px;
+        margin-top: 5px;
+        margin-left: 7px;
+    }
+}
+
+
+.change-profile-picture {
+    input {
+        // border: solid 2px red;
+    }
 }

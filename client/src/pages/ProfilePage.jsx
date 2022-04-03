@@ -7,7 +7,7 @@ import FileBase from 'react-file-base64';
 import ProfilePicture from '../components/ProfilePicture';
 import ProfileInformation from '../components/ProfileInformation';
 import EditInformation from '../components/EditProfileInformation';
-import Posts from '../components/Posts';
+import Posts from '../components/Posts/Posts';
 import CoverPicture from '../components/CoverPicture';
 
 
@@ -42,11 +42,41 @@ function ProfilePage() {
 
     return (
         <>
-            <h1>Hello {data && data.name + ' ' + data.lastname}!</h1>
+            {/* <h1>Hello {data && data.name + ' ' + data.lastname}!</h1> */}
+
+
+
+            <div className='profile__cover-wrapper'>
+                <div className='profile__cover' style={{ backgroundImage: `url(${data && data.profileCover ? data.profileCover : 'https://cdn.kapwing.com/final_5dcefe88eefa230014071a02_435224.jpg'})` }} >
+                    <div className='relative'>
+                        <img className='profile__picture' src={data && data.profilePicture ? data.profilePicture : 'https://nakedsecurity.sophos.com/wp-content/uploads/sites/2/2013/08/facebook-silhouette_thumb.jpg'} />
+
+                        <div className='circle' style={{zIndex:'9999999'}}>
+                            <ProfilePicture setData={setData} data={data}/>
+                        </div>
+                        <p>{data && data.name} {data && data.lastname}</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div className='information'>
+                <div className='information-wrapper'>
+                    <div className='profile-information'>
+                        <ProfileInformation data={data} />
+                    </div>
+                    <div className='edit-information'>
+                        <button>Edit information</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+
             <CoverPicture data={data} />
-            <ProfilePicture data={data} />
+            {/* <ProfilePicture data={data} /> */}
             <EditInformation data={data} />
-            <ProfileInformation data={data} />
             <Posts data={data} />
             <LogoutButton />
         </>

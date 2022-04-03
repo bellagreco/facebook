@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import LogoutButton from '../components/LogoutButton'
+import LogoutButton from '../LogoutButton'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react/cjs/react.development';
 import axios from 'axios'
 import FileBase from 'react-file-base64';
+import './styles.scss'
+import Pen from './pen.png'
+import Gallery from './gallery.png'
 
 function Posts(props) {
     const [data, setData] = useState(null)
@@ -34,23 +37,31 @@ function Posts(props) {
     return <div>
         <div className='post__container'>
             <div className='post__header'>
-                <div className='post__option'><p>Make Post</p></div>
-                <div className='post__option'><p>Photo/Video</p></div>
-                <div className='post__option'><p>Life Event</p></div>
-                <div className='post__input'>
-                    <div className='post__picture'><img src={props.data && props.data.profilePicture} /></div>
-                    <input type="text" name='post' value={post} onChange={(e) => { getPost(e) }} />
-
-                </div>
+                <div className='post__option'><img src={Pen}></img><p>Make Post</p></div>
+                <div className='post__option'><img src={Gallery}></img><p>Photo/Video</p></div>
             </div>
+            <div className='post__input'>
+                <div className='post__picture'><div className='post__img'><img src={props.data && props.data.profilePicture} /> </div></div>
+                <textarea type="text" name='post' value={post} onChange={(e) => { getPost(e) }} placeholder="Write something here..." />
+
+            </div>
+            <div className='post__footer'>
+                <button onClick={submitPost} > Submit </button>
+            </div>
+
         </div>
         {/* <input type="text" name='post' value={post} onChange={(e) => { getPost(e) }} /> */}
 
-        <button onClick={submitPost} > Submit </button>
 
         {props.data && props.data.posts && props.data.posts.slice(0).reverse().map(x =>
-            <div>
-                <p>{props.data.name + ' ' + props.data.lastname + ': ' + x}</p>
+            <div className='post__box'>
+                <div className='post__box-header'>
+                    <div className='post__picture'><div className='post__img'><img src={props.data && props.data.profilePicture} /> </div></div>
+                <p>{props.data.name + ' ' + props.data.lastname}</p>
+                </div>
+            <div className='post'>
+                <p>{x}</p>
+                </div>
             </div>
         )}
 

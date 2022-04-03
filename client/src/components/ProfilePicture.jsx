@@ -4,42 +4,53 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react/cjs/react.development';
 import axios from 'axios'
 import FileBase from 'react-file-base64';
-
-
-function ProFilePicture (props) {
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [data, setData] = useState(null)
+import EditIcon from '../images/edit.png'
 
 
 
-    const submitProfilePicture = async () => {
+function ProfilePicture(props) {
+    const [selectedImage, setSelectedImage] = useState();
+    const [loading, setLoading] = useState(false);
+
+
+    const onImageChange = () => {
+
+        setLoading(true)
+        const newImage = document.getElementById('selectedFile');
+        const reader = new FileReader();
+        reader.readAsDataURL(newImage.files[0]);
+        reader.onload = function (e) {
+            setSelectedImage(e.target.result)
+            submitProfilePicture(e.target.result)
+        };
+    }
+
+
+    function submitProfilePicture(newImage) {
         const email = localStorage.getItem('email').toString();
-        console.log(selectedImage)
-        await axios.post(`http://localhost:3001/updateProfilePicture?email=${email}`, { profilePicture: selectedImage })
-            .then(response => console.log(response, 'POST'))
+        axios.post(`http://localhost:3001/updateProfilePicture?email=${email}`, { profilePicture: newImage })
+            .then(response => { 
+                if(response.status === 201) { 
+                    props.setData(response.data) 
+                    setLoading(false)
+                }
+            })
             .catch(error => {
                 console.log(error)
             })
 
-        await axios.get(`http://localhost:3001/getProfile?email=${email}`)
-            .then(response => setData(response.data))
-            .catch(error => {
-                console.log(error)
-            })
+
 
     }
     return <>
-       <div style={{ width: '200px', height: '200px', marginBottom: '50px' }}>
-                <img style={{ width: '100%', height: '100%', objectFit: 'contain', overflow: 'hidden' }} src={props.data && props.data.profilePicture ? props.data.profilePicture : 'https://nakedsecurity.sophos.com/wp-content/uploads/sites/2/2013/08/facebook-silhouette_thumb.jpg'} />
-                <FileBase
-                    type="file"
-                    multiple={false}
-                    onDone={({ base64 }) => setSelectedImage(base64)}
-                />
-                <button onClick={submitProfilePicture} > Submit Profile Picture</button>
+        <div className='change-profile-picture' style={{ width: '200px', marginBottom: '50px'}}>
+            <label for='selectedFile'>                            <img style={{ cursor: 'pointer' }} src={EditIcon} />
+            </label>
+            <input style={{ display: 'none' }} id='selectedFile' type="file" onChange={onImageChange} name='testdasdas' ></input>
+           {loading && <div style={{ background:'white', position:'absolute', top:'12px', left:'-140px', opacity:'0.7' , width:'160px', height:'160px', zIndex:'-1'}}> <img style={{margin:'65px', height:'30px', width:'30px'}} src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' /></div>}
 
-            </div>
+        </div>
     </>;
-  }
+}
 
-  export default ProFilePicture
+export default ProfilePicture

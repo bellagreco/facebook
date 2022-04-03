@@ -6,7 +6,7 @@ import axios from 'axios'
 import FileBase from 'react-file-base64';
 
 
-function CoverPicture (props) {
+function CoverPicture(props) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [data, setData] = useState(null)
 
@@ -29,17 +29,16 @@ function CoverPicture (props) {
 
     }
     return <>
-       <div style={{ width: '850x', height: '250px', marginBottom: '50px', overflow: 'hidden'  }}>
-                <img style={{ width: '100%', height: '100%', objectFit: 'cover', overflow: 'hidden' }} src={props.data && props.data.profileCover ? props.data.profileCover : 'https://cdn.kapwing.com/final_5dcefe88eefa230014071a02_435224.jpg'} />
-                <FileBase
-                    type="file"
-                    multiple={false}
-                    onDone={({ base64 }) => setSelectedImage(base64)}
-                />
-                <button onClick={submitCoverPicture} > Submit Cover Picture</button>
+        <div style={{ width: '850x', marginBottom: '50px', overflow: 'hidden' }}>
+            <FileBase
+                type="file"
+                multiple={false}
+                onDone={({ base64 }) => setSelectedImage(base64)}
+            />
+            <button onClick={submitCoverPicture} > Submit Cover Picture</button>
 
-            </div>
+        </div>
     </>;
-  }
+}
 
-  export default CoverPicture
+export default CoverPicture
