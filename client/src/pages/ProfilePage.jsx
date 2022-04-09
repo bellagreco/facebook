@@ -9,6 +9,7 @@ import ProfileInformation from '../components/ProfileInformation';
 import EditInformation from '../components/EditProfileInformation';
 import Posts from '../components/Posts/Posts';
 import CoverPicture from '../components/CoverPicture';
+import Header from '../components/Header'
 
 
 function ProfilePage() {
@@ -34,7 +35,7 @@ function ProfilePage() {
         const token = localStorage.getItem("token");
 
         if (!token) {
-            return navigate('/login')
+            return navigate('/')
         }
 
     }, []);
@@ -45,6 +46,7 @@ function ProfilePage() {
         <>
             {/* <h1>Hello {data && data.name + ' ' + data.lastname}!</h1> */}
 
+            <Header /> 
 
 
             <div className='profile__cover-wrapper'>
