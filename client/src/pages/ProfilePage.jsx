@@ -14,6 +14,7 @@ import CoverPicture from '../components/CoverPicture';
 function ProfilePage() {
     const [data, setData] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
 
 
     const navigate = useNavigate();
@@ -50,10 +51,8 @@ function ProfilePage() {
                 <div className='profile__cover' style={{ backgroundImage: `url(${data && data.profileCover ? data.profileCover : 'https://cdn.kapwing.com/final_5dcefe88eefa230014071a02_435224.jpg'})` }} >
                     <div className='relative'>
                         <img className='profile__picture' src={data && data.profilePicture ? data.profilePicture : 'https://nakedsecurity.sophos.com/wp-content/uploads/sites/2/2013/08/facebook-silhouette_thumb.jpg'} />
-
-                        <div className='circle' style={{zIndex:'9999999'}}>
-                            <ProfilePicture setData={setData} data={data}/>
-                        </div>
+                        <ProfilePicture setData={setData} data={data} />
+                        <CoverPicture setData={setData} data={data} />
                         <p>{data && data.name} {data && data.lastname}</p>
                     </div>
                 </div>
@@ -65,19 +64,18 @@ function ProfilePage() {
                     <div className='profile-information'>
                         <ProfileInformation data={data} />
                     </div>
-                    <div className='edit-information'>
-                        <button>Edit information</button>
+                    <div className='edit-information-area'>
+                        <button className='-secondary' onClick={() => setModalOpen(true)}>Edit information</button>
                     </div>
                 </div>
 
 
             </div>
+            <div style={{position:'relative'}}>
+            {modalOpen && <EditInformation setModalOpen={setModalOpen} setData={setData} data={data} />}
 
-
-            <CoverPicture data={data} />
-            {/* <ProfilePicture data={data} /> */}
-            <EditInformation data={data} />
-            <Posts data={data} />
+            </div>
+            <Posts setData={setData} data={data} />
             <LogoutButton />
         </>
     )

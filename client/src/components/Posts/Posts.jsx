@@ -9,8 +9,6 @@ import Pen from './pen.png'
 import Gallery from './gallery.png'
 
 function Posts(props) {
-    const [data, setData] = useState(null)
-
     const [post, setPost] = useState(null)
 
     const getPost = (e) => {
@@ -21,17 +19,10 @@ function Posts(props) {
         const email = localStorage.getItem('email').toString();
         console.log(email)
         await axios.post(`http://localhost:3001/createPost?email=${email}`, { post: post })
-            .then(response => console.log(response, 'POST'))
-            .catch(error => {
+        .then(response => props.setData(response.data))
+        .catch(error => {
                 console.log(error)
             })
-
-        await axios.get(`http://localhost:3001/getProfile?email=${email}`)
-            .then(response => setData(response.data))
-            .catch(error => {
-                console.log(error)
-            })
-
     }
 
     return <div>
@@ -43,7 +34,6 @@ function Posts(props) {
             <div className='post__input'>
                 <div className='post__picture'><div className='post__img'><img src={props.data && props.data.profilePicture} /> </div></div>
                 <textarea type="text" name='post' value={post} onChange={(e) => { getPost(e) }} placeholder="Write something here..." />
-
             </div>
             <div className='post__footer'>
                 <button onClick={submitPost} > Submit </button>
@@ -56,11 +46,15 @@ function Posts(props) {
         {props.data && props.data.posts && props.data.posts.slice(0).reverse().map(x =>
             <div className='post__box'>
                 <div className='post__box-header'>
-                    <div className='post__picture'><div className='post__img'><img src={props.data && props.data.profilePicture} /> </div></div>
-                <p>{props.data.name + ' ' + props.data.lastname}</p>
+                    <div className='post__picture'>
+                        <div className='post__img'>
+                            <img src={props.data && props.data.profilePicture} />
+                        </div>
+                    </div>
+                    <p>{props.data.name + ' ' + props.data.lastname}</p>
                 </div>
-            <div className='post'>
-                <p>{x}</p>
+                <div className='post'>
+                    <p>{x}</p>
                 </div>
             </div>
         )}

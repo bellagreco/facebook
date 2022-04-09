@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react/cjs/react.development';
 import axios from 'axios'
 
-function EditInformation (props) {
+function EditInformation(props) {
     const [data, setData] = useState(null)
     const [post, setPost] = useState(null)
     const [relationshipStatus, setRelationshipStatus] = useState(null)
@@ -12,6 +12,8 @@ function EditInformation (props) {
     const [city, setCity] = useState(null)
     const [website, setWebsite] = useState(null)
     const [birthday, setBirthday] = useState(null)
+    const [loading, setLoading] = useState(false);
+
 
     const getRelationshipStatus = (e) => {
         setRelationshipStatus(e.target.value)
@@ -35,30 +37,50 @@ function EditInformation (props) {
     }
 
     const submitInfo = async () => {
+        setLoading(true)
         const email = localStorage.getItem('email').toString();
         console.log(email)
         await axios.post(`http://localhost:3001/updateInfo?email=${email}`, { relationshipStatus: relationshipStatus, networks: network, city: city, birthday: birthday, website: website })
-            .then(response => console.log(response, 'POST'))
-            .catch(error => {
+        .then(response => {
+            if (response.status === 201) {
+                props.setData(response.data)
+                props.setModalOpen(false)
+                setLoading(false)
+
+            }
+        })
+        .catch(error => {
                 console.log(error)
             })
-
-        await axios.get(`http://localhost:3001/getProfile?email=${email}`)
-            .then(response => setData(response.data))
-            .catch(error => {
-                console.log(error)
-            })
-
+           
     }
-    return <> 
-                <input type="text" name='network' value={network} onChange={(e) => { getNetwork(e) }} />
-                <input type="text" name='relationshipStatus' value={relationshipStatus} onChange={(e) => { getRelationshipStatus(e) }} />
-                <input type="text" name='city' value={city} onChange={(e) => { getCity(e) }} />
-                <input type="text" name='birthday' value={birthday} onChange={(e) => { getBithday(e) }} />
-                <input type="text" name='website' value={website} onChange={(e) => { getWebsite(e) }} />
-                <button onClick={submitInfo} > Submit New Information </button>
-    </>
-  }
+    return <div className='edit-information'>
+        <div className='edit-information-header'>
+            <h2>Edit Information</h2>
+            <div className='close-icon' onClick={() => props.setModalOpen(false)} />
+        </div>
+        <div className='edit-information-body'>
+            <div className='edit-information-input'>
+                <label>Network:  </label>
+                <input type="text" placeholder={props.data && props.data.information.networks} name='network' value={network} onChange={(e) => { getNetwork(e) }} />
+            </div>
+            <div className='edit-information-input'>
+                <label> Relationship Status:</label> <input placeholder={props.data && props.data.information.relationshipStatus} type="text" name='relationshipStatus' value={relationshipStatus} onChange={(e) => { getRelationshipStatus(e) }} />
+            </div>
+            <div className='edit-information-input'>
+                <label>    City: </label>   <input  placeholder={props.data && props.data.information.city}  type="text" name='city' value={city} onChange={(e) => { getCity(e) }} />
+            </div><div className='edit-information-input'>
+                <label>  Birthday: </label> <input  placeholder={props.data && props.data.information.birthday} type="text" name='birthday' value={birthday} onChange={(e) => { getBithday(e) }} />
+            </div>
+            <div className='edit-information-input'>
+                <label>    Website: </label> <input  placeholder={props.data && props.data.information.website}  type="text" name='website' value={website} onChange={(e) => { getWebsite(e) }} />
+            </div>
+        </div>
+        <div className='edit-information-button'>
+            <button className='-primary' onClick={submitInfo} disabled={loading && true} > Submit New Information </button>
+        </div>
+    </div>
+}
 
 
 export default EditInformation
